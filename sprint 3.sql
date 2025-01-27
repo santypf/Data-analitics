@@ -211,3 +211,58 @@ ORDER BY t.id DESC;
 -- Comprobamos su existencia
 SELECT *
 FROM informetecnico;
+
+-- MODIFICACION NIVELL 1 EXERCICI 3
+
+-- Primero eliminamos la informacion introducida para realizar bien el ejercicio
+DELETE FROM transaction
+WHERE id='108B1D1D-5B23-A76C-55EF-C568E49A99DD';
+
+-- vamos a crear el mismo credit_card_id en la tabla credit_card
+INSERT INTO credit_card (id, Iban, PIN, CVV, expiring_date, fecha_actual)
+VALUES ('CcU-9999', '9999999999999', '9999', '999', '2099-12-12', CURRENT_DATE);
+
+-- comprobamos el id nuevo en la tabla credit_cards
+SELECT *
+FROM credit_card
+WHERE id='CcU-9999';
+
+-- vamos a crear el mismo company_id en la tabla company
+INSERT INTO company (id, company_name, phone, email, country)
+VALUES ('b-9999', 'Nueve', '99999999', '9999@99.com', 'Noveno');
+
+-- comprobamos el id nuevo en la tabla company
+SELECT *
+FROM company
+WHERE id='b-9999';
+
+-- vamos a crear el mismo user_id en la tabla data_user
+INSERT INTO data_user (id)
+VALUES ('9999');
+
+-- comprobamos el id nuevo en la tabla data_user
+SELECT *
+FROM data_user
+WHERE id='9999';
+
+-- Ahora ya podemos ingresar el nuevo registro en la tabla transaction
+INSERT INTO transaction (id, credit_card_id, company_id, user_id, lat, longitude, timestamp, amount, declined)
+VALUES ('108B1D1D-5B23-A76C-55EF-C568E49A99DD', 'CcU-9999', 'b-9999', 9999, 829.999, -117.999, CURRENT_TIMESTAMP(), 111.11, 0);
+
+-- Comprobamos el nuevo registro de la tabla transaction
+SELECT *
+FROM transaction
+WHERE id='108B1D1D-5B23-A76C-55EF-C568E49A99DD';
+
+-- MODIFICACION NIVELL 3 EXERCICI 1
+
+-- primero tenemos que saber que nombre tiene nuestra foreign key
+SHOW CREATE TABLE data_user;
+
+-- Anulamos foreign key creado
+ALTER TABLE data_user
+DROP FOREIGN KEY data_user_ibfk_1;
+
+-- Creamos nuevo foreign key
+ALTER TABLE transaction
+ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES data_user(id);
