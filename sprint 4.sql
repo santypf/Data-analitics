@@ -2,8 +2,8 @@
 -- NIVELL 1
 
 -- Creamos la base de datos
-CREATE DATABASE TransactionsDB;
-USE TransactionsDB;
+CREATE DATABASE TransactionsBD;
+USE TransactionsBD;
 
 -- Creamos la tabla `users`
 CREATE TABLE users (
@@ -26,7 +26,7 @@ CREATE TABLE credit_cards (
     iban VARCHAR(34),
     pan VARCHAR(19),
     pin VARCHAR(10),
-    cvv INT,
+    cvv VARCHAR(4),
     track1 VARCHAR(100),
     track2 VARCHAR(100),
     expiring_date VARCHAR(20),
@@ -60,7 +60,49 @@ CREATE TABLE transactions (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Ahora vamos a introducir la informacion usando la herramienta de Workbench Table Data import wizard
+-- Vamos a introducir los datos a partir de los csv proporcionado
+LOAD DATA LOCAL INFILE 'C:\\Program Files\\MySQL\\MySQL Server 8.0\\uploads\\users_ca.csv'
+INTO TABLE users
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'C:\\Program Files\\MySQL\\MySQL Server 8.0\\uploads\\users_uk.csv'
+INTO TABLE users
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'C:\\Program Files\\MySQL\\MySQL Server 8.0\\uploads\\users_usa.csv'
+INTO TABLE users
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'C:\\Program Files\\MySQL\\MySQL Server 8.0\\uploads\\credit_cards.csv'
+INTO TABLE credit_cards
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'C:\\Program Files\\MySQL\\MySQL Server 8.0\\uploads\\companies.csv'
+INTO TABLE companies
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'C:\\Program Files\\MySQL\\MySQL Server 8.0\\uploads\\transactions.csv'
+INTO TABLE transactions
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
 -- Comprobamos informacion introducida
 SELECT *
 FROM companies;
@@ -137,7 +179,15 @@ CREATE TABLE products (
     warehouse_id VARCHAR(10)
 );
 
--- Entramos los datos con la herramienta de Workbench y lo comprobamos
+-- Entramos los datos
+LOAD DATA LOCAL INFILE 'C:\\Program Files\\MySQL\\MySQL Server 8.0\\uploads\\products.csv'
+INTO TABLE products
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+-- Comprobamos los datos introducidos
 SELECT *
 FROM products;
 
